@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Year 11 Horticulture — Ultimate Grower Challenge</title>
+<style>
+:root{--green:#183f2b;--leaf:#39784c;--lime:#b9dc79;--cream:#fff8e9;--orange:#e4863d;--ink:#17221b;--pale:#eef7e8}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:linear-gradient(135deg,#e7f2df,#fff8e9,#e5f0e8);line-height:1.5}
+header{background:linear-gradient(135deg,var(--green),var(--leaf));color:white;padding:28px 18px;text-align:center;position:sticky;top:0;z-index:10;box-shadow:0 4px 18px #0003}
+h1{font-size:clamp(2rem,5vw,3.6rem);margin:0;letter-spacing:-1px}
+header p{margin:5px 0 0}
+.progress{max-width:900px;height:8px;background:#ffffff33;border-radius:99px;margin:18px auto 0;overflow:hidden}
+#progressBar{height:100%;width:0;background:var(--lime);transition:width .25s}
+main{max-width:1000px;margin:auto;padding:22px 16px 70px}
+.card{background:#fff;border:1px solid #d9e6da;border-radius:24px;padding:26px;margin:18px 0;box-shadow:0 8px 26px #173f2a12}
+.hidden{display:none!important}
+.kicker{font-size:.78rem;font-weight:900;letter-spacing:1.5px;color:var(--orange);text-transform:uppercase}
+.time{float:right;background:var(--pale);color:var(--leaf);padding:5px 10px;border-radius:99px;font-weight:bold}
+h2{color:var(--green);margin:8px 0 12px;font-size:1.75rem}
+h3{color:var(--green)}
+.box{background:#f4f9f0;border-left:5px solid var(--lime);padding:14px 16px;border-radius:10px;margin:14px 0}
+label{display:block;font-weight:bold;margin:14px 0 6px}
+input,textarea,select{width:100%;font:inherit;padding:12px;border:2px solid #d7e3d8;border-radius:12px;background:white}
+textarea{min-height:110px;resize:vertical}
+button{border:0;border-radius:12px;padding:12px 18px;background:var(--green);color:white;font:inherit;font-weight:800;cursor:pointer;margin:8px 6px 0 0}
+button:hover{filter:brightness(1.08)}
+button.alt{background:#e7f1e4;color:var(--green)}
+button.orange{background:var(--orange)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.choice{border:2px solid #dce7dd;border-radius:14px;padding:14px;margin:9px 0;cursor:pointer;background:white}
+.choice:hover{border-color:var(--leaf);transform:translateY(-1px)}
+.choice.correct{background:#e7f7eb;border-color:#34834c}
+.choice.wrong{background:#fff0ed;border-color:#c75d4c}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:15px}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid #dce6dd;padding:8px;vertical-align:top}
+th{background:#eef6e9}
+table textarea{min-height:80px}
+.score{text-align:center;font-size:4rem;font-weight:900;color:var(--green)}
+.center{text-align:center}
+footer{text-align:center;color:#66736b;padding:25px}
+@media print{header{position:static}.card{box-shadow:none;break-inside:avoid}button{display:none}body{background:white}}
+</style>
+</head>
+
+<body>
+<header>
+<h1>🌿 THE ULTIMATE GROWER CHALLENGE</h1>
+<p>Year 11 Horticulture • Two-period independent relief activity</p>
+<div class="progress"><div id="progressBar"></div></div>
+</header>
+
+<main>
+
+<section class="card page" data-page="0" id="page0">
+<span class="kicker">Mission briefing</span><span class="time">5 min</span>
+<h2>Welcome, Grower.</h2>
+<p>You have two periods to complete a series of challenges about plants, soil, pests, biodiversity, sustainability, mātauranga Māori and horticultural problem-solving.</p>
+<div class="box"><strong>Instructions:</strong> Work independently. Complete every challenge. You may research unfamiliar terms, but write your answers in your own words.</div>
+<label for="studentName">Your name</label>
+<input id="studentName" type="text" placeholder="Type your name">
+<button type="button" id="startBtn">🌱 Begin challenge</button>
+</section>
+
+<section class="card page hidden" data-page="1" id="page1">
+<span class="kicker">Challenge 1 — Hort brain</span><span class="time">12 min</span>
+<h2>🧠 Can you still think like a horticulturalist?</h2>
+<p>Choose the best answer. You will get immediate feedback.</p>
+<div id="quizContainer"></div>
+<div id="quizFeedback" class="box hidden"></div>
+<button type="button" id="quizContinue" disabled>Continue →</button>
+</section>
+
+<section class="card page hidden" data-page="2" id="page2">
+<span class="kicker">Challenge 2 — Plant emergency room</span><span class="time">15 min</span>
+<h2>🚑 Diagnose the Garden</h2>
+<p>Good horticulturalists <strong>diagnose before they treat</strong>.</p>
+
+<div class="box"><strong>Case A:</strong> Lower leaves are yellowing and the soil stays wet for several days.</div>
+<div class="choice case-choice" data-answer="true">Investigate drainage/waterlogging and root condition.</div>
+<div class="choice case-choice" data-answer="false">Immediately add more water.</div>
+<div class="choice case-choice" data-answer="false">Assume insects caused it.</div>
+
+<div class="box"><strong>Case B:</strong> New shoots are distorted and covered in tiny insects.</div>
+<div class="choice case-choice" data-answer="true">Investigate aphids and inspect the plant.</div>
+<div class="choice case-choice" data-answer="false">Remove every insect in the garden.</div>
+<div class="choice case-choice" data-answer="false">Add fertiliser immediately.</div>
+
+<div class="box"><strong>Case C:</strong> Seeds were planted but very few germinated.</div>
+<div class="choice case-choice" data-answer="true">Investigate seed viability, depth, moisture, temperature and conditions.</div>
+<div class="choice case-choice" data-answer="false">Water constantly.</div>
+
+<label for="diagnosis">Choose one case and explain your diagnosis process.</label>
+<textarea id="diagnosis" placeholder="What evidence would you look for before deciding what to do?"></textarea>
+<button type="button" class="nextBtn">Garden diagnosis →</button>
+</section>
+
+<section class="card page hidden" data-page="3" id="page3">
+<span class="kicker">Challenge 3 — Garden design</span><span class="time">20 min</span>
+<h2>🌱 Build a Sustainable School Garden</h2>
+<p>You have a <strong>10 m × 8 m garden</strong>. Design a productive garden that also supports biodiversity and healthy soil.</p>
+
+<div class="grid">
+<div><label for="crops">What will you grow? At least 5 crops.</label><textarea id="crops" placeholder="Think about diversity and companion planting."></textarea></div>
+<div><label for="soil">How will you protect soil health?</label><textarea id="soil" placeholder="Compost, mulch, crop rotation, ground cover..."></textarea></div>
+<div><label for="biodiversity">How will you encourage biodiversity?</label><textarea id="biodiversity" placeholder="Plants, insects, birds, habitat, water..."></textarea></div>
+<div><label for="pestManagement">How will you manage pests?</label><textarea id="pestManagement" placeholder="Think Integrated Pest Management."></textarea></div>
+</div>
+<label for="gardenDesign">Explain your overall garden design.</label>
+<textarea id="gardenDesign" placeholder="What are you trying to balance?"></textarea>
+<button type="button" class="nextBtn">Garden designed →</button>
+</section>
+
+<section class="card page hidden" data-page="4" id="page4">
+<span class="kicker">Challenge 4 — Knowledge & place</span><span class="time">15 min</span>
+<h2>🌙 Maramataka & Rongoā Rākau</h2>
+<p>Research if necessary, then explain your answers in your own words.</p>
+
+<label for="maramataka">1. What is the maramataka?</label>
+<textarea id="maramataka"></textarea>
+<label for="maramatakaContext">2. Why is maramataka more than a generic gardening calendar?</label>
+<textarea id="maramatakaContext"></textarea>
+<label for="rongoa">3. What is rongoā Māori?</label>
+<textarea id="rongoa"></textarea>
+<label for="nativePlant">4. Choose one native NZ plant associated with rongoā. What is it traditionally used for?</label>
+<textarea id="nativePlant"></textarea>
+<div class="box"><strong>Research rule:</strong> Read, understand and explain. Do not copy and paste.</div>
+<button type="button" class="nextBtn">Knowledge challenge complete →</button>
+</section>
+
+<section class="card page hidden" data-page="5" id="page5">
+<span class="kicker">Challenge 5 — Failure analysis</span><span class="time">12 min</span>
+<h2>🥕 The Crop That Failed</h2>
+<p>A crop has failed. Think like a scientist rather than saying “it just didn't grow”.</p>
+<table>
+<thead><tr><th>Factor</th><th>Evidence I would investigate</th><th>What could I change?</th></tr></thead>
+<tbody>
+<tr><td><strong>Water</strong></td><td><textarea id="waterEvidence"></textarea></td><td><textarea id="waterChange"></textarea></td></tr>
+<tr><td><strong>Soil / nutrients</strong></td><td><textarea id="soilEvidence"></textarea></td><td><textarea id="soilChange"></textarea></td></tr>
+<tr><td><strong>Light / temperature</strong></td><td><textarea id="lightEvidence"></textarea></td><td><textarea id="lightChange"></textarea></td></tr>
+<tr><td><strong>Pests / disease</strong></td><td><textarea id="pestEvidence"></textarea></td><td><textarea id="pestChange"></textarea></td></tr>
+</tbody>
+</table>
+<label for="failureLesson">What is the biggest lesson from crop failure?</label>
+<textarea id="failureLesson" placeholder="Think beyond 'try again'. What information does failure give a grower?"></textarea>
+<button type="button" class="nextBtn">Failure analysed →</button>
+</section>
+
+<section class="card page hidden" data-page="6" id="page6">
+<span class="kicker">Challenge 6 — Professional grower</span><span class="time">10 min</span>
+<h2>🏆 Your Hort Career Card</h2>
+<label for="skills">Three horticultural skills I can demonstrate</label>
+<textarea id="skills"></textarea>
+<label for="newKnowledge">One thing I know now that I didn't know at the start of the year</label>
+<textarea id="newKnowledge"></textarea>
+<label for="problemSolving">One horticultural problem I can now solve better</label>
+<textarea id="problemSolving"></textarea>
+<label for="improvement">One thing I still need to improve</label>
+<textarea id="improvement"></textarea>
+<label for="quality">My strongest horticultural quality</label>
+<select id="quality">
+<option value="">Choose one...</option><option>Observation</option><option>Patience</option><option>Practical skills</option><option>Problem-solving</option><option>Creativity</option><option>Teamwork</option><option>Persistence</option><option>Curiosity</option>
+</select>
+<button type="button" class="orange" id="finishBtn">🌻 Finish the challenge</button>
+</section>
+
+<section class="card page hidden" data-page="7" id="page7">
+<span class="kicker">Mission complete</span>
+<h2>🌿 Grower Profile</h2>
+<div class="score" id="completionScore">—</div>
+<p class="center"><strong id="finalName">Grower</strong>, you completed the Ultimate Grower Challenge.</p>
+<div class="box" id="finalSummary"></div>
+<p class="center"><em>A good grower observes, learns, adapts and tries again.</em></p>
+<button type="button" id="printBtn">🖨️ Print / Save as PDF</button>
+<button type="button" class="alt" id="saveBtn">💾 Save my answers</button>
+</section>
+
+</main>
+<footer>🌱 Year 11 Horticulture • Observe • Learn • Adapt • Grow</footer>
+
+<script>
+(function () {
+"use strict";
+
+var currentPage = 0;
+var quizIndex = 0;
+var quizScore = 0;
+
+var questions = [
+  {
+    question: "Which approach is best when a plant is unhealthy?",
+    answers: ["Diagnose the likely cause before treating", "Add fertiliser immediately", "Water more", "Remove it immediately"],
+    correct: 0
+  },
+  {
+    question: "What is biodiversity in a garden?",
+    answers: ["Lots of the same plant", "A variety of living organisms and interactions", "No insects", "Only native plants"],
+    correct: 1
+  },
+  {
+    question: "What does compost mainly add to soil?",
+    answers: ["Organic matter and nutrients", "Sunlight", "Pesticides", "Seeds"],
+    correct: 0
+  },
+  {
+    question: "Integrated Pest Management means...",
+    answers: ["Spraying everything", "Monitoring, prevention and the least harmful effective control", "Ignoring pests", "Only using chemicals"],
+    correct: 1
+  },
+  {
+    question: "Which is the best horticultural observation?",
+    answers: ["The plant looks bad", "Three leaves have yellow margins and the soil is saturated", "I don't like this plant", "It needs stuff"],
+    correct: 1
+  },
+  {
+    question: "Why can crop rotation help?",
+    answers: ["It can reduce some pest/disease cycles and vary crop demands", "It guarantees no pests", "It makes soil unnecessary", "It removes the need for water"],
+    correct: 0
+  }
+];
+
+function showPage(number) {
+  var pages = document.querySelectorAll(".page");
+  for (var i = 0; i < pages.length; i++) {
+    pages[i].classList.add("hidden");
+  }
+  document.getElementById("page" + number).classList.remove("hidden");
+  currentPage = number;
+  document.getElementById("progressBar").style.width = ((number / 7) * 100) + "%";
+  window.scrollTo(0, 0);
+}
+
+function renderQuestion() {
+  var container = document.getElementById("quizContainer");
+  var q = questions[quizIndex];
+  container.innerHTML = "";
+
+  var title = document.createElement("h3");
+  title.textContent = "Question " + (quizIndex + 1) + " of " + questions.length;
+  container.appendChild(title);
+
+  var questionText = document.createElement("p");
+  var strong = document.createElement("strong");
+  strong.textContent = q.question;
+  questionText.appendChild(strong);
+  container.appendChild(questionText);
+
+  for (var i = 0; i < q.answers.length; i++) {
+    var choice = document.createElement("div");
+    choice.className = "choice";
+    choice.textContent = q.answers[i];
+    choice.setAttribute("data-answer-index", i);
+    choice.addEventListener("click", handleAnswer);
+    container.appendChild(choice);
+  }
+}
+
+function handleAnswer(event) {
+  var selected = event.currentTarget;
+  var selectedIndex = Number(selected.getAttribute("data-answer-index"));
+  var q = questions[quizIndex];
+  var choices = document.querySelectorAll("#quizContainer .choice");
+
+  for (var i = 0; i < choices.length; i++) {
+    choices[i].style.pointerEvents = "none";
+  }
+
+  if (selectedIndex === q.correct) {
+    selected.classList.add("correct");
+    quizScore++;
+  } else {
+    selected.classList.add("wrong");
+    choices[q.correct].classList.add("correct");
+  }
+
+  window.setTimeout(function () {
+    quizIndex++;
+    if (quizIndex < questions.length) {
+      renderQuestion();
+    } else {
+      document.getElementById("quizContainer").innerHTML = "";
+      var feedback = document.getElementById("quizFeedback");
+      feedback.classList.remove("hidden");
+      feedback.textContent = "Memory score: " + quizScore + "/" + questions.length + ". Now move on to the deeper challenges.";
+      document.getElementById("quizContinue").disabled = false;
+    }
+  }, 600);
+}
+
+function handleCaseChoice(event) {
+  var all = document.querySelectorAll(".case-choice");
+  for (var i = 0; i < all.length; i++) {
+    all[i].classList.remove("correct", "wrong");
+  }
+  var clicked = event.currentTarget;
+  var correct = clicked.getAttribute("data-answer") === "true";
+  clicked.classList.add(correct ? "correct" : "wrong");
+}
+
+function getValue(id) {
+  var element = document.getElementById(id);
+  return element ? element.value.trim() : "";
+}
+
+function finishActivity() {
+  var fields = [
+    "diagnosis","crops","soil","biodiversity","pestManagement","gardenDesign",
+    "maramataka","maramatakaContext","rongoa","nativePlant",
+    "waterEvidence","waterChange","soilEvidence","soilChange",
+    "lightEvidence","lightChange","pestEvidence","pestChange","failureLesson",
+    "skills","newKnowledge","problemSolving","improvement"
+  ];
+
+  var completed = 0;
+  for (var i = 0; i < fields.length; i++) {
+    if (getValue(fields[i]).length > 10) completed++;
+  }
+
+  var percentage = Math.round((completed / fields.length) * 100);
+  document.getElementById("completionScore").textContent = percentage + "%";
+  document.getElementById("finalName").textContent = getValue("studentName") || "Grower";
+
+  document.getElementById("finalSummary").innerHTML =
+    "<strong>Your grower snapshot:</strong><br>" +
+    "🌱 Strongest quality: " + (getValue("quality") || "Not selected") + "<br>" +
+    "🛠️ Skills identified: " + (getValue("skills") || "Not completed") + "<br>" +
+    "🧠 Biggest new learning: " + (getValue("newKnowledge") || "Not completed") + "<br>" +
+    "🎯 Improvement focus: " + (getValue("improvement") || "Not completed");
+
+  showPage(7);
+}
+
+function saveAnswers() {
+  var ids = [
+    "studentName","diagnosis","crops","soil","biodiversity","pestManagement","gardenDesign",
+    "maramataka","maramatakaContext","rongoa","nativePlant",
+    "waterEvidence","waterChange","soilEvidence","soilChange",
+    "lightEvidence","lightChange","pestEvidence","pestChange","failureLesson",
+    "skills","newKnowledge","problemSolving","improvement","quality"
+  ];
+
+  var text = "YEAR 11 HORTICULTURE — ULTIMATE GROWER CHALLENGE\\n\\n";
+  for (var i = 0; i < ids.length; i++) {
+    text += ids[i].toUpperCase() + ":\\n" + getValue(ids[i]) + "\\n\\n";
+  }
+
+  var blob = new Blob([text], {type: "text/plain"});
+  var url = URL.createObjectURL(blob);
+  var link = document.createElement("a");
+  link.href = url;
+  link.download = "Year_11_Hort_Ultimate_Grower_Challenge.txt";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+document.getElementById("startBtn").addEventListener("click", function () {
+  showPage(1);
+});
+
+document.getElementById("quizContinue").addEventListener("click", function () {
+  showPage(2);
+});
+
+var nextButtons = document.querySelectorAll(".nextBtn");
+for (var n = 0; n < nextButtons.length; n++) {
+  nextButtons[n].addEventListener("click", function () {
+    showPage(currentPage + 1);
+  });
+}
+
+var caseChoices = document.querySelectorAll(".case-choice");
+for (var c = 0; c < caseChoices.length; c++) {
+  caseChoices[c].addEventListener("click", handleCaseChoice);
+}
+
+document.getElementById("finishBtn").addEventListener("click", finishActivity);
+document.getElementById("printBtn").addEventListener("click", function () { window.print(); });
+document.getElementById("saveBtn").addEventListener("click", saveAnswers);
+
+renderQuestion();
+})();
+</script>
+</body>
+</html>
